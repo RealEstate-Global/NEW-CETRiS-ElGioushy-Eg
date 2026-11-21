@@ -24,7 +24,6 @@ import {
 import { useDemo } from "@/features/site/components/DemoProvider";
 import { StorePage } from "@/features/site/components/StorePage";
 import type { DemoData, Localized } from "@/types/site";
-import { Tooltip } from "@/components/ui/Tooltip";
 
 /* ── Shared Tailwind class constants (DRY form styling) ────────── */
 const INPUT_CX =
