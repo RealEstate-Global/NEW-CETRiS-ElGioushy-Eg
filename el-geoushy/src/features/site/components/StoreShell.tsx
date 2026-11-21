@@ -22,6 +22,7 @@ import { useDemo } from "./DemoProvider";
 import { translate, translateHome } from "@/features/i18n";
 import { getVerifiedWhatsAppUrl, getWhatsAppChatUrl } from "@/lib/whatsapp";
 import { WhatsAppChat } from "./WhatsAppChat";
+import { Tooltip } from "@/components/ui/Tooltip";
 
 const paths = ["/", "/product", "/uses", "/how-to-use", "/offers", "/faq", "/contact"];
 
@@ -63,14 +64,16 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
             </span>
           </div>
 
-          <button
-            className="icon-button mobile-menu p-2 rounded-2xl md:hidden text-ink hover:bg-surface-soft"
-            aria-label={c.navToggle}
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <Tooltip content={c.navToggle}>
+            <button
+              className="icon-button mobile-menu p-2 rounded-2xl md:hidden text-ink hover:bg-surface-soft"
+              aria-label={c.navToggle}
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </Tooltip>
 
           {/* Desktop Navigation */}
           <nav className={open ? "main-nav is-open" : "main-nav"}>
@@ -94,12 +97,13 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
 
           {/* Header Action Buttons */}
           <div className="header-actions flex items-center gap-2 sm:gap-3">
-            <button
+            <Tooltip content={theme === "dark" ? c.lightMode : c.darkMode}>
+              <button
               className="theme-toggle rounded-2xl p-2.5 transition-all duration-200 hover:scale-105"
               type="button"
               aria-label={theme === "dark" ? c.lightMode : c.darkMode}
               aria-pressed={theme === "dark"}
-              title={theme === "dark" ? c.lightMode : c.darkMode}
+              
               onClick={(event) => {
                 const bounds = event.currentTarget.getBoundingClientRect();
                 toggleTheme({ x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 });
@@ -108,8 +112,10 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
               <span key={theme} className="theme-icon block" aria-hidden="true">
                 {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
               </span>
-            </button>
+              </button>
+            </Tooltip>
 
+            <Tooltip content={c.language}>
             <button
               className="language-button flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-2xl border border-border bg-surface-soft hover:bg-surface hover:border-primary transition-all duration-200"
               onClick={() => setLocale(locale === "ar" ? "en" : "ar")}
@@ -118,6 +124,7 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
               <Globe2 size={16} />
               <span className="hidden sm:inline">{c.language}</span>
             </button>
+            </Tooltip>
 
             <a
               className="button button-primary header-cta hidden sm:inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
@@ -195,98 +202,105 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
               <div className="footer-social flex items-center gap-2.5 flex-wrap pt-1">
                 {/* Facebook Badge */}
                 {data.settings.facebook && (
+                  <Tooltip content={c.facebook}>
                   <a
                     href={data.settings.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook"
-                    title={c.facebook}
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-white/10 hover:bg-[#1877F2]/25 text-white hover:text-sky-300 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Facebook size={18} />
                   </a>
+                </Tooltip>
                 )}
 
                 {/* WhatsApp Badge */}
-                <a
+                <Tooltip content={"WhatsApp"}>
+                  <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
-                  title="WhatsApp: +0201016264326"
                   className="w-10 h-10 rounded-2xl flex items-center justify-center bg-[#25D366]/20 hover:bg-[#25D366]/35 text-[#8ed7ae] transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                 >
                   <MessageCircle size={18} />
                 </a>
+                </Tooltip>
 
                 {/* Google Reviews Badge */}
                 {data.settings.googleReviewUrl && (
+                  <Tooltip content={c.review}>
                   <a
                     href={data.settings.googleReviewUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Google Reviews"
-                    title={c.review}
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-amber-400/15 hover:bg-amber-400/30 text-amber-300 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Star size={18} />
                   </a>
+                </Tooltip>
                 )}
 
                 {/* TikTok Badge if available */}
                 {data.settings.tiktok && (
+                  <Tooltip content={"TikTok"}>
                   <a
                     href={data.settings.tiktok}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="TikTok"
-                    title="TikTok"
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Music size={18} />
                   </a>
+                </Tooltip>
                 )}
 
                 {/* X Badge if available */}
                 {data.settings.x && (
+                  <Tooltip content={"X (Twitter)"}>
                   <a
                     href={data.settings.x}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="X (Twitter)"
-                    title="X"
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Twitter size={18} />
                   </a>
+                </Tooltip>
                 )}
 
                 {/* Pinterest Badge if available */}
                 {data.settings.pinterest && (
+                  <Tooltip content={"Pinterest"}>
                   <a
                     href={data.settings.pinterest}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Pinterest"
-                    title="Pinterest"
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-[#E60023]/20 hover:bg-[#E60023]/35 text-rose-300 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Pin size={18} />
                   </a>
+                </Tooltip>
                 )}
 
                 {/* Instagram Badge ONLY IF NON-EMPTY (preserving user rule: "hide unknown Instagram") */}
                 {data.settings.instagram && (
+                  <Tooltip content={"Instagram"}>
                   <a
                     href={data.settings.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
-                    title="Instagram"
                     className="w-10 h-10 rounded-2xl flex items-center justify-center bg-pink-500/20 hover:bg-pink-500/35 text-pink-300 transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
                   >
                     <Instagram size={18} />
                   </a>
+                </Tooltip>
                 )}
               </div>
             </div>
