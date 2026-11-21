@@ -24,6 +24,7 @@ import {
 import { useDemo } from "@/features/site/components/DemoProvider";
 import { StorePage } from "@/features/site/components/StorePage";
 import type { DemoData, Localized } from "@/types/site";
+import { Tooltip } from "@/components/ui/Tooltip";
 
 /* ── Shared Tailwind class constants (DRY form styling) ────────── */
 const INPUT_CX =
@@ -177,7 +178,8 @@ function LocalizedArray({
             className={INPUT_CX}
           />
           <button
-            className="shrink-0 p-2 rounded-lg border-0 bg-transparent cursor-pointer text-[var(--danger)] transition-colors hover:bg-[var(--danger-border)]"
+            className="app-tooltip shrink-0 p-2 rounded-lg border-0 bg-transparent cursor-pointer text-[var(--danger)] transition-colors hover:bg-[var(--danger-border)]"
+            data-tooltip={`Remove ${label}`}
             aria-label={`Remove ${label}`}
             onClick={() => onChange(items.filter((_, n) => n !== i))}
           >
@@ -456,7 +458,8 @@ export function AdminDashboard() {
                   Visible
                 </label>
                 <button
-                  className="shrink-0 p-2 rounded-lg border-0 bg-transparent cursor-pointer text-[var(--danger)] transition-colors hover:bg-[var(--danger-border)]"
+                  className="app-tooltip shrink-0 p-2 rounded-lg border-0 bg-transparent cursor-pointer text-[var(--danger)] transition-colors hover:bg-[var(--danger-border)]"
+                  data-tooltip="Delete variant"
                   aria-label="Delete variant"
                   onClick={() => {
                     update((d) => {
@@ -998,7 +1001,8 @@ export function AdminDashboard() {
           {tabs.map((t) => (
             <button
               key={t.id}
-              className={`flex items-center gap-3 border-0 rounded-2xl text-left py-2.5 px-3.5 text-xs font-semibold cursor-pointer transition-all duration-200 w-full max-md:shrink-0 max-md:w-auto ${
+              data-tooltip={t.title}
+              className={`app-tooltip flex items-center gap-3 border-0 rounded-2xl text-left py-2.5 px-3.5 text-xs font-semibold cursor-pointer transition-all duration-200 w-full max-md:shrink-0 max-md:w-auto ${
                 tab === t.id
                   ? "bg-[var(--primary)] text-white shadow-xs"
                   : "bg-transparent text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]"
@@ -1041,7 +1045,8 @@ export function AdminDashboard() {
             <button
               onClick={() => toggleTheme()}
               aria-label="Toggle theme"
-              className="button button-outline inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs transition-colors cursor-pointer"
+              className="app-tooltip button button-outline inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs transition-colors cursor-pointer"
+              data-tooltip={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
             >
               {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
             </button>
