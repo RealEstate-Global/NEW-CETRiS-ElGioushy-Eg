@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { getWhatsAppChatUrl } from "@/lib/whatsapp";
 import type { Locale } from "@/types/site";
+import { Tooltip } from "@/components/ui/Tooltip";
 
 interface WhatsAppChatProps {
   number?: string;
@@ -49,13 +50,15 @@ export function WhatsAppChat({
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              aria-label={isAr ? "إغلاق نافذة المحادثة" : "Close chat"}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-            >
-              <X size={18} />
-            </button>
+            <Tooltip content={isAr ? "إغلاق نافذة المحادثة" : "Close chat"}>
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label={isAr ? "إغلاق نافذة المحادثة" : "Close chat"}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </Tooltip>
           </div>
 
           {/* Chat Bubble Body */}
